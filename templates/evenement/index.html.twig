@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+        .actions a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+        .no-records {
+            text-align: center;
+            color: #777;
+        }
+        .create-new {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .create-new a {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .create-new a:hover {
+            background-color: #218838;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Evenement </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdEv</th>
+                <th>NomEv</th>
+                <th>TypeEv</th>
+                <th>Date</th>
+                <th>ImageEv</th>
+                <th>DescriptionEv</th>
+                <th>CodeParticipant</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td>{{ evenement.idEv }}</td>
+                <td>{{ evenement.nomEv }}</td>
+                <td>{{ evenement.typeEv }}</td>
+                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
+               <td><img src="{{ asset('img/evenements/' ~ evenement.imageEv) }}"" style="max-width: 100px; max-height: 100px;"></td>
+
+                <td>{{ evenement.descriptionEv }}</td>
+                <td>{{ evenement.codeParticipant }}</td>
+                <td class="actions">
+                    <a href="{{ path('app_evenement_show', {'idEv': evenement.idEv}) }}">Show</a>
+                    <a href="{{ path('app_evenement_edit', {'idEv': evenement.idEv}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8" class="no-records">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="create-new">
+        <a href="{{ path('app_evenement_new') }}">Create new</a>
+    </div>
+{% endblock %}
